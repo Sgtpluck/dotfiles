@@ -3,3 +3,6 @@
 source "${BASH_SOURCE%/*}/shared/symlinks.sh"
 
 # Add any setup for your dotfiles under this line
+
+symlink_dotfile bashrc ~/.bashrc
+symlink_dotfile bash_profile ~/.bash_profile
