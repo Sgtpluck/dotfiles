@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared/symlinks.sh"
+
+# Add any setup for your dotfiles under this line
