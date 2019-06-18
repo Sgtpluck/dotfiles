@@ -2,6 +2,7 @@
 export PATH="$PATH:$HOME/.composer/vendor/bin"
 
 alias bat="open -a 'Adobe Acrobat' $@"
+alias g=git
 
 function hlog { heroku logs -d worker.1 -r prod -t | grep --line-buffered "$1"; }
 export -f hlog
