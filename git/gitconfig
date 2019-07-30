@@ -14,7 +14,7 @@
 [alias]
   # add
   a = add                           # add
-  chunkyadd = add --patch           # stage commits chunk by chunk
+  chunk = add --patch           # stage commits chunk by chunk
 
   # via http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
   snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
@@ -32,6 +32,7 @@
   ci = commit                       # commit
   amend = commit --amend            # ammend your last commit
   ammend = commit --amend           # ammend your last commit
+  ane = commit --amend --no-edit    # amend without having to edit msg
 
   # checkout
   co = checkout                     # checkout
@@ -39,6 +40,9 @@
 
   # cherry-pick
   cp = cherry-pick -x               # grab a change from a branch
+
+  # delete
+  delete = branch -d
 
   # diff
   d = diff                          # diff unstaged changes
@@ -68,6 +72,9 @@
 
   sp = !git sync && git please
   sync = !git fetch origin && git rebase -i origin/master
+
+   # respond to PR feedback
+  respond = !git commit --amend --no-edit && git push --force-with-lease
 
   # reset
   unstage = reset HEAD              # remove files from index (tracking)
@@ -113,7 +120,7 @@
   ff = only
 [core]
   autocrlf = false
-  editor = nvim
+  editor = vim
   excludesfile = ~/.gitignore
   pager = diff-so-fancy | less --tabs=4 -RFX
 [advice]

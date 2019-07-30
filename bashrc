@@ -3,6 +3,7 @@ export PATH="$PATH:$HOME/.composer/vendor/bin"
 
 alias bat="open -a 'Adobe Acrobat' $@"
 alias g=git
+alias ls=exa
 
 function hlog { heroku logs -d worker.1 -r prod -t | grep --line-buffered "$1"; }
 export -f hlog
@@ -110,6 +111,22 @@ fzf_complete_branch() {
 
 is_in_git_repo() {
   git rev-parse HEAD > /dev/null 2>&1
+}
+
+### PROCESS
+# mnemonic: [K]ill [P]rocess
+# show output of "ps -ef", use [tab] to select one or multiple entries
+# press [enter] to kill selected processes and go back to the process list.
+# or press [escape] to go back to the process list. Press [escape] twice to exit completely.
+
+function kp() {
+  local pid=$(ps -ef | sed 1d | eval "fzf ${FZF_DEFAULT_OPTS} -m --header='[kill:process]'" | awk '{print $2}')
+
+  if [ "x$pid" != "x" ]
+  then
+    echo $pid | xargs kill -${1:-9}
+    kp
+  fi
 }
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.

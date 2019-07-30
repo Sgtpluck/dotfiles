@@ -11,3 +11,4 @@ require_installer git
 
 brew_install direnv
 brew_install autojump
+brew_install exa
