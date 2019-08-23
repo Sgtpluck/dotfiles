@@ -11,4 +11,3 @@ if [ ! -f $HOME/.fzf.bash ]; then
   fi
 
 
-echo "Setting up Homebrew..."
