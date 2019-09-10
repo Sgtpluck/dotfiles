@@ -7,6 +7,7 @@ if [[ "$SOURCED_SHARED_DOTFILES" != "yes" ]]; then
   source "$shared_dir/packages.sh"
   source "$shared_dir/symlinks.sh"
   source "$shared_dir/require.sh"
+  source "$shared_dir/os-detection.sh"
 
   SOURCED_SHARED_DOTFILES="yes"
 fi
