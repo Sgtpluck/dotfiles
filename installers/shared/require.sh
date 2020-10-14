@@ -17,7 +17,7 @@ function array_contains() {
 
 function require_installer() {
   local name=$1
-  local installer_path="$(dotfiles_location)/$name"
+  local installer_path="$(installer_location)/$name"
 
   # Don't include installers twice
   if [ ! $(array_contains "${_required_installers[@]}" "$name") == "y" ]; then

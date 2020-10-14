@@ -1,7 +1,6 @@
 
 export PATH="$PATH:$HOME/.composer/vendor/bin"
 
-alias bat="open -a 'Adobe Acrobat' $@"
 alias g=git
 alias ls=exa
 

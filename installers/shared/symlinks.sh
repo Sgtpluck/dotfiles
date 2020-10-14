@@ -2,8 +2,12 @@
 
 _symlinks_current_dir="${BASH_SOURCE%/*}"
 
-function dotfiles_location() {
+function installer_location() {
   echo $(cd $_symlinks_current_dir/.. && pwd)
+}
+
+function dotfiles_location() {
+  echo $(cd $_symlinks_current_dir/../.. && pwd)
 }
 
 function symlink_dotfile() {
