@@ -7,6 +7,9 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+GPG_TTY=$(tty)
+export GPG_TTY
+
 eval "$(direnv hook zsh)"
 eval "$(fasd --init auto)"
 

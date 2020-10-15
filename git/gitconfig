@@ -123,6 +123,7 @@
   editor = vim
   excludesfile = ~/.gitignore
   pager = diff-so-fancy | less --tabs=4 -RFX
+	hooksPath = /Users/davidammarion/.git-support/hooks
 [advice]
   statusHints = false
 [diff]
@@ -139,3 +140,9 @@
 [user]
 	email = davida.marion@gsa.gov
 	name = Davida Marion
+	signingkey = 11D7C38A4EF97530
+[gitseekret]
+	version = 1
+	rulespath = /Users/davidammarion/.git-support/seekret-rules
+	rulesenabled = aws.secret_access_key,aws.access_key_id,aws.account_id,mandrill.username,mandrill.password,mandrill.api_key,newrelic.license_key,slack.api_token,slack.webhook_url
+	exceptionsfile = ""

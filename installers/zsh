@@ -30,7 +30,7 @@ function update_shell_whitelist() {
 
 function chsh_zsh() {
   if [[ "$SHELL" != "$(zsh_binary)" ]]; then
-    dotsay "@b@blue[[Changing shell for $current_user...]]"
+    echo "Changing shell for $current_user"
 
     local current_user=$USER
     sudo chsh -s $(zsh_binary) $current_user
@@ -89,15 +89,6 @@ function install_base16_shell() {
   fi
 }
 
-function install_cani() {
-  if ! command_exists cani; then
-    rvm default do gem install cani
-  fi
-
-  mkdir -p ~/.config
-  symlink_dotfile config/cani ~/.config/cani
-}
-
 echo "Setting up ZSH..."
 
 brew_install exa
@@ -117,4 +108,3 @@ install_antigen
 
 update_shell_whitelist
 chsh_zsh
-install_cani
