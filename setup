@@ -2,13 +2,11 @@
 
 source "${BASH_SOURCE%/*}/installers/shared.sh"
 
-symlink_dotfile bashrc ~/.bashrc
-symlink_dotfile bash_profile ~/.bash_profile
-
 require_installer package-manager
 require_installer node
 require_installer git
 require_installer zsh
 
+brew_cask_install rectangle
 brew_install direnv
 brew_install autojump

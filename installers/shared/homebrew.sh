@@ -1,16 +1,49 @@
+function brew_is_tapped() {
+  local tap=$1
+
+  ! is_macos && return 1
+
+  brew tap | grep -q "$tap"
+}
+
+function brew_tap() {
+  local tap=$1
+
+  ! is_macos && return 1
+
+  brew tap "$tap"
+}
+
 function brew_install() {
   local package=$1
-  local expected_executable=${2:-$package}
-  local command_prefix=${3:-brew}
 
-  if test ! $(command -v $expected_executable); then
-    echo "+ brew install $package"
-    $command_prefix install "$package"
+  ! is_macos && return 1
+
+  if brew list "$package" > /dev/null 2>&1; then
+    echo "+ $package already installed... skipping."
   else
-    echo "+ $package already installed"
+    brew install $@
   fi
 }
 
 function brew_cask_install() {
-  brew_install "$1" "$2" "brew cask"
+  local package=$1
+
+  ! is_macos && return 1
+
+  if brew cask list "$package" > /dev/null 2>&1; then
+    echo "+ $package already installed... skipping."
+  else
+    brew cask install $@
+  fi
+}
+
+function brew_install_all() {
+  local packages=("$@")
+
+  ! is_macos && return 1
+
+  for package in "${packages[@]}"; do
+    brew_install $package
+  done
 }

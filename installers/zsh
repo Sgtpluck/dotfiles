@@ -19,7 +19,7 @@ function zsh_binary() {
   fi
 }
 
-function update_shell_whitelist() {
+function update_shell_accepted_list() {
   local zshbin=$(zsh_binary)
   if ! cat /etc/shells | grep -q $zshbin; then
     echo "Adding $zshbin to /etc/shells, please enter your sudo password"
@@ -28,22 +28,20 @@ function update_shell_whitelist() {
   fi
 }
 
-function chsh_zsh() {
-  if [[ "$SHELL" != "$(zsh_binary)" ]]; then
-    echo "Changing shell for $current_user"
+# function chsh_zsh() {
+#   if [[ "$SHELL" != "$(zsh_binary)" ]]; then
+#     echo "Changing shell for $current_user"
 
-    local current_user=$USER
-    sudo chsh -s $(zsh_binary) $current_user
-  fi
-}
+#     local current_user=$USER
+#     sudo chsh -s $(zsh_binary) $current_user
+#   fi
+# }
 
 function install_fzf() {
-  if [ ! -d ~/.fzf ]; then
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-  fi
+  brew_install fzf
 
   if [ ! -f $HOME/.fzf.zsh ]; then
-    ~/.fzf/install
+    $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
   fi
 }
 
@@ -106,5 +104,5 @@ install_fzf
 setup_zsh_symlinks
 install_antigen
 
-update_shell_whitelist
-chsh_zsh
+update_shell_accepted_list
+# chsh_zsh

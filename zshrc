@@ -1,22 +1,40 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# ======== Cache directory (for oh-my-zsh plugins) =========
+[ ! -d $HOME/.zcustom/cache ] && mkdir -p $HOME/.zcustom/cache
+
+export ZSH="$HOME/.zcustom"
+export ZSH_CACHE_DIR="$ZSH/cache"
+
+# ======== Random settings ===========
+
+# Disable auto title so tmux window titles don't get messed up.
+export DISABLE_AUTO_TITLE="true"
+
+# Maintain a stack of cd directory traversals for `popd`
+setopt AUTO_PUSHD
+
+# Allow extended matchers like ^file, etc
+set -o EXTENDED_GLOB
+
+# ========= History settings =========
+if [ -z "$HISTFILE" ]; then
+  HISTFILE=$HOME/.zsh_history
 fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+HISTSIZE=10000
+SAVEHIST=10000
 
-GPG_TTY=$(tty)
-export GPG_TTY
-
-eval "$(direnv hook zsh)"
-eval "$(fasd --init auto)"
+setopt append_history
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups # ignore duplication command history list
+setopt hist_ignore_space
+setopt inc_append_history
+setopt share_history # share command history data
+setopt extended_glob
 
 # =========== Plugins ============
 source $HOME/.zsh/vendor/antigen.zsh
 
-antigen bundle robbyrussell/oh-my-zsh plugins/fasd
 antigen bundle robbyrussell/oh-my-zsh plugins/git
 antigen bundle robbyrussell/oh-my-zsh plugins/nvm
 antigen bundle robbyrussell/oh-my-zsh plugins/pyenv
@@ -36,7 +54,41 @@ antigen theme romkatv/powerlevel10k
 
 antigen apply
 
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+eval "$(direnv hook zsh)"
+eval "$(fasd --init auto)"
+
+source /usr/local/share/chruby/chruby.sh
+
+export PATH="/usr/local/sbin:$PATH"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# GPG_TTY=$(tty)
+# export GPG_TTY
+
+# ======= Python
+# TODO: add a python installer
+# installing pyenv
+export PATH="/Users/davidammarion/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+
+# ======= RVM is a special snowflake and needs to be last ========
+if [ ! -f ~/.config/dotfiles/rbenv ]; then
+  export PATH="$HOME/.rvm/bin:$PATH"
+  [ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
+fi
+
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
