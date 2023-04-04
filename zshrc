@@ -72,8 +72,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# GPG_TTY=$(tty)
-# export GPG_TTY
+GPG_TTY=$(tty)
+export GPG_TTY
 
 # ======= Python
 # TODO: add a python installer
@@ -82,13 +82,21 @@ export PATH="/Users/davidammarion/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+export PATH="/usr/local/opt/maven@3.5/bin:$PATH"
+
+# Current postgres version
+export PATH="/usr/local/opt/postgresql@12/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 
 # ======= RVM is a special snowflake and needs to be last ========
 if [ ! -f ~/.config/dotfiles/rbenv ]; then
   export PATH="$HOME/.rvm/bin:$PATH"
   [ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
 fi
-
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
