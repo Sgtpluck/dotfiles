@@ -4,6 +4,16 @@
 export ZSH="$HOME/.zcustom"
 export ZSH_CACHE_DIR="$ZSH/cache"
 
+# GSA Settings
+export GSA_USERNAME=davida.marion@gsa.gov
+export AWS_PROFILE=master
+export AWS_VAULT_PROMPT=ykman
+export AWS_VAULT_KEYCHAIN_NAME=login
+export YKMAN_OATH_CREDENTIAL_NAME=$(ykman oath accounts list)
+export LOGIN_IAM_PROFILE=power
+export AWS_IAM_USER=davida.marion
+alias go-idp="cd ~/code/login/identity-idp && git pull && make update"
+alias yubi="ykman oath accounts code arn:aws:iam::davida.marion:mfa/davida.marion"
 # ======== Random settings ===========
 
 # Disable auto title so tmux window titles don't get messed up.
@@ -48,7 +58,7 @@ antigen bundle chriskempson/base16-shell
 antigen bundle wookayin/fzf-fasd
 antigen bundle twang817/zsh-ssh-agent
 antigen bundle zsh-users/zsh-completions
-antigen bundle zdharma/fast-syntax-highlighting
+antigen bundle zdharma-continuum/fast-syntax-highlighting
 
 antigen theme romkatv/powerlevel10k
 
@@ -58,8 +68,6 @@ antigen apply
 
 eval "$(direnv hook zsh)"
 eval "$(fasd --init auto)"
-
-source /usr/local/share/chruby/chruby.sh
 
 export PATH="/usr/local/sbin:$PATH"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -78,9 +86,9 @@ export GPG_TTY
 # ======= Python
 # TODO: add a python installer
 # installing pyenv
-export PATH="/Users/davidammarion/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# export PATH="/Users/davidammarion/.pyenv/bin:$PATH"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

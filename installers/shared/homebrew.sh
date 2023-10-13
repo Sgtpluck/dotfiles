@@ -31,10 +31,10 @@ function brew_cask_install() {
 
   ! is_macos && return 1
 
-  if brew cask list "$package" > /dev/null 2>&1; then
+  if brew list "$package" --cask > /dev/null 2>&1; then
     echo "+ $package already installed... skipping."
   else
-    brew cask install $@
+    brew install $@ --cask
   fi
 }
 
