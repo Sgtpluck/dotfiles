@@ -89,7 +89,7 @@ function install_base16_shell() {
 
 echo "Setting up ZSH..."
 
-brew_install exa
+brew_install eza
 brew_install neofetch
 install_base16_shell
 setup_zsh_completions_repo

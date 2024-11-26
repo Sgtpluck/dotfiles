@@ -12,8 +12,15 @@ export AWS_VAULT_KEYCHAIN_NAME=login
 export YKMAN_OATH_CREDENTIAL_NAME=$(ykman oath accounts list)
 export LOGIN_IAM_PROFILE=power
 export AWS_IAM_USER=davida.marion
-alias go-idp="cd ~/code/login/identity-idp && git pull && make update"
+alias go-idp="cd ~/code/login/identity-idp && git pull && make update && g co db/schema.rb"
 alias yubi="ykman oath accounts code arn:aws:iam::davida.marion:mfa/davida.marion"
+alias sudo-idp="cd ~/code/login/identity-idp && aws-vault exec prod-power -- bundle exec rails c"
+alias zscale-on="sudo launchctl load /Library/LaunchDaemons/com.zscaler.service.plist /Library/LaunchDaemons/com.zscaler.tunnel.plist"
+alias zscale-off="sudo launchctl unload /Library/LaunchDaemons/com.zscaler.service.plist /Library/LaunchDaemons/com.zscaler.tunnel.plist"
+
+# git cmp
+alias cmp="~/dotfiles/scripts/git-cmp"
+
 # ======== Random settings ===========
 
 # Disable auto title so tmux window titles don't get messed up.
@@ -48,12 +55,19 @@ source $HOME/.zsh/vendor/antigen.zsh
 antigen bundle robbyrussell/oh-my-zsh plugins/git
 antigen bundle robbyrussell/oh-my-zsh plugins/nvm
 antigen bundle robbyrussell/oh-my-zsh plugins/pyenv
-antigen bundle robbyrussell/oh-my-zsh plugins/rvm
 antigen bundle robbyrussell/oh-my-zsh plugins/vi-mode
 antigen bundle robbyrussell/oh-my-zsh plugins/zsh_reload
 
+if [ ! -f ~/dotfiles/rbenv ]; then
+  antigen bundle robbyrussell/oh-my-zsh plugins/rvm
+else
+  antigen bundle robbyrussell/oh-my-zsh plugins/rbenv
+fi
+
 antigen bundle dbalatero/fzf-git
-antigen bundle DarrinTisdale/zsh-aliases-exa
+# antigen bundle DarrinTisdale/zsh-aliases-exa
+alias ll="eza -l -g --icons"
+alias ls="eza --icons"
 antigen bundle chriskempson/base16-shell
 antigen bundle wookayin/fzf-fasd
 antigen bundle twang817/zsh-ssh-agent
@@ -83,6 +97,10 @@ fi
 GPG_TTY=$(tty)
 export GPG_TTY
 
+function weather() {
+  curl wttr.in
+}
+
 # ======= Python
 # TODO: add a python installer
 # installing pyenv
@@ -102,9 +120,14 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+alias g='git'
+
+# sonar scanner path
+# export PATH="/Users/davidammarion/Downloads/sonar-scanner/bin:$PATH"
 
 # ======= RVM is a special snowflake and needs to be last ========
-if [ ! -f ~/.config/dotfiles/rbenv ]; then
-  export PATH="$HOME/.rvm/bin:$PATH"
-  [ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
-fi
+# if [ ! -f ~/.config/dotfiles/rbenv ]; then
+#   export PATH="$HOME/.rvm/bin:$PATH"
+#   [ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
+# fi
+

@@ -2,7 +2,6 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
-# We need to hook RVM's cd function to get auto-cd with nvm
 require_installer ruby
 
 function source_nvm() {

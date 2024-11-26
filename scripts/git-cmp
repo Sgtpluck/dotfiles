@@ -1,0 +1,59 @@
+#!/usr/bin/env ruby
+
+# stolen shamelessly from https://github.com/zachmargolis/margs-dev/blob/main/scripts/git-cmp
+
+# Usage:
+#
+#   git cmp [BRANCH]
+#
+#   Opens a GitHub compare view, optionally against a specific [BRANCH]
+
+require 'uri'
+
+Config = Struct.new(
+  :host, # github.com
+  :repo, # zachmargolis/margs-dev
+)
+
+def parse_https_url(url)
+  uri = URI.parse(url)
+  Config.new(uri.host, clean_up_path(uri.path))
+end
+
+# git@github.com:zachmargolis/margs-dev.git
+def parse_git_url(url)
+  _git, rest = url.split('@', 2)
+  host, path = rest.split(':', 2)
+  Config.new(host, clean_up_path(path))
+end
+
+# "/zachmargolis/margs-dev.git" => "zachmargolis/margs-dev"
+def clean_up_path(path)
+  path.gsub(%r|^/|, '').chomp('.git')
+end
+
+def github_compare_url(config, branch_name, from_branch = nil)
+  "https://#{config.host}/#{config.repo}/compare/" + (from_branch ? "#{from_branch}...#{branch_name}" : branch_name)
+end
+
+def gitlab_compare_url(config, branch_name, from_branch = nil)
+  "https://#{config.host}/#{config.repo}/-/compare/#{from_branch || 'main'}...#{branch_name}"
+end
+
+origin_url = `git remote get-url origin`.chomp
+branch_name = `git rev-parse --abbrev-ref HEAD`.chomp
+
+config = begin
+  parse_https_url(origin_url)
+rescue URI::InvalidURIError
+  parse_git_url(origin_url)
+end
+
+from_branch = ARGV.first
+compare_url = if config.host.include?('github')
+  github_compare_url(config, branch_name, from_branch)
+else
+  gitlab_compare_url(config, branch_name, from_branch)
+end
+
+system('open', compare_url)
