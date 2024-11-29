@@ -5,8 +5,8 @@ source "${BASH_SOURCE%/*}/shared.sh"
 if test ! $(command -v brew); then
     echo "Installing homebrew"
 
-    ruby -e "$(curl -fsSL \
-      https://raw.githubusercontent.com/Homebrew/install/HEAD/install)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 
     brew update
   fi
