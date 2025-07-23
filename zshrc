@@ -3,6 +3,8 @@
 
 export ZSH="$HOME/.zcustom"
 export ZSH_CACHE_DIR="$ZSH/cache"
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 
 # GSA Settings
 export GSA_USERNAME=davida.marion@gsa.gov
@@ -17,6 +19,8 @@ alias yubi="ykman oath accounts code arn:aws:iam::davida.marion:mfa/davida.mario
 alias sudo-idp="cd ~/code/login/identity-idp && aws-vault exec prod-power -- bundle exec rails c"
 alias zscale-on="sudo launchctl load /Library/LaunchDaemons/com.zscaler.service.plist /Library/LaunchDaemons/com.zscaler.tunnel.plist"
 alias zscale-off="sudo launchctl unload /Library/LaunchDaemons/com.zscaler.service.plist /Library/LaunchDaemons/com.zscaler.tunnel.plist"
+alias login-prod="aws-vault login prod-power --duration=3h"
+alias login-sandbox="aws-vault login sandbox-power --duration=3h"
 
 # git cmp
 alias cmp="~/dotfiles/scripts/git-cmp"
@@ -70,7 +74,8 @@ alias ll="eza -l -g --icons"
 alias ls="eza --icons"
 antigen bundle chriskempson/base16-shell
 antigen bundle wookayin/fzf-fasd
-antigen bundle twang817/zsh-ssh-agent
+# antigen bundle twang817/zsh-ssh-agent
+
 antigen bundle zsh-users/zsh-completions
 antigen bundle zdharma-continuum/fast-syntax-highlighting
 
@@ -81,7 +86,6 @@ antigen apply
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 eval "$(direnv hook zsh)"
-eval "$(fasd --init auto)"
 
 export PATH="/usr/local/sbin:$PATH"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.

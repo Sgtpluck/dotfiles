@@ -98,7 +98,6 @@ install_package zsh
 install_package zsh-completions
 
 install_package direnv
-install_fasd
 install_fzf
 
 setup_zsh_symlinks
